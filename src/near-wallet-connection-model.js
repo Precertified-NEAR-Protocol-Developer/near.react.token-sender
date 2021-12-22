@@ -59,8 +59,6 @@ export class NearWalletConnection {
     const isAccountIdEmpty = '' === currentAccountId;
     const isAccountIdNull = null === currentAccountId;
     const isNotLoggedIn = isAccountIdUndefined || isAccountIdEmpty || isAccountIdNull;
-    console.log("is user logged in ")
-    console.log(!isNotLoggedIn)
     return !isNotLoggedIn;
   }
 }
