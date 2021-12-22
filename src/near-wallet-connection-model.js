@@ -33,8 +33,8 @@ export class NearWalletConnection {
   async getContract() {
     if(this.contract === null) {
         this.contract = await new Contract(await this.getAccount(), this.nearConfig.contractName, {
-          viewMethods: [],
-          changeMethods: [],
+          viewMethods: ['getNames', 'getValues'],
+          changeMethods: ['addFunds'],
         });
     }
     return this.contract;

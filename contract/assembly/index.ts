@@ -1,34 +1,45 @@
-/*
- * This is an example of an AssemblyScript smart contract with two simple,
- * symmetric functions:
- *
- * 1. setGreeting: accepts a greeting, such as "howdy", and records it for the
- *    user (account_id) who sent the request
- * 2. getGreeting: accepts an account_id and returns the greeting saved for it,
- *    defaulting to "Hello"
- *
- * Learn more about writing NEAR smart contracts with AssemblyScript:
- * https://docs.near.org/docs/develop/contracts/as/intro
- *
- */
+import { Context, logging, storage, PersistentMap } from 'near-sdk-as'
 
-import { Context, logging, storage } from 'near-sdk-as'
+export class TokenSender {
+    constructor(
+        public senderToRecipientMap:PersistentMap<string, string[]>,
+        public recipientToAmountMap:PersistentMap<string, i32[]>) {
+    }
 
-const DEFAULT_MESSAGE = 'Hello'
+    addFunds(recipient:string, amount:i32): void {
+        const sender = Context.sender;
+        if(!this.senderToRecipientMap.contains(sender)) {
+            this.senderToRecipientMap.set(sender, [recipient]);
+            this.recipientToAmountMap.set(sender, [amount]);
+        } else {
+            const allRecipients = this.senderToRecipientMap.getSome(sender);
+            const recipientReceivedAmounts = this.recipientToAmountMap.getSome(sender);
+            const hasCurrentRecipient = allRecipients.includes(recipient);            
 
-// Exported functions will be part of the public interface for your smart contract.
-// Feel free to extract behavior to non-exported functions!
-export function getGreeting(accountId: string): string | null {
-  // This uses raw `storage.get`, a low-level way to interact with on-chain
-  // storage for simple contracts.
-  // If you have something more complex, check out persistent collections:
-  // https://docs.near.org/docs/concepts/data-storage#assemblyscript-collection-types
-  return storage.get<string>(accountId, DEFAULT_MESSAGE)
+            if(!hasCurrentRecipient) {
+                recipientReceivedAmounts.push(amount);
+                allRecipients.push(recipient);
+                this.senderToRecipientMap.set(sender, allRecipients);
+                this.recipientToAmountMap.set(sender, recipientReceivedAmounts);
+            } else {
+                const indexOfRecipient = allRecipients.indexOf(recipient);
+                const oldRecipientTotalSent = recipientReceivedAmounts[indexOfRecipient];
+                const newRecipientTotalSent = oldRecipientTotalSent + amount;
+                recipientReceivedAmounts[indexOfRecipient] = newRecipientTotalSent;
+                this.recipientToAmountMap.set(sender, recipientReceivedAmounts);
+            }
+        }
+    }
 }
 
-export function setGreeting(message: string): void {
-  const accountId = Context.sender
-  // Use logging.log to record logs permanently to the blockchain!
-  logging.log(`Saving greeting "${message}" for account "${accountId}"`)
-  storage.set(accountId, message)
+const senderMap = new PersistentMap<string, string[]>('SenderToRecipientMap');
+const receiverMap = new PersistentMap<string, i32[]>('recipientToAmountMap');
+const tokenSender = new TokenSender(senderMap, receiverMap) ;
+
+export function getNames(user:string):string[] {
+    return tokenSender.senderToRecipientMap.contains(user) ? tokenSender.senderToRecipientMap.getSome(user) : [];
+}
+
+export function getValues(user:string):i32[] {
+    return tokenSender.recipientToAmountMap.contains(user) ? tokenSender.recipientToAmountMap.getSome(user) : [];
 }
