@@ -8,10 +8,10 @@ import { nearWalletConnection } from '../near-wallet-connection';
 
 const isUserLoggedIn = () => {
     const currentAccountId = window.accountId;
-    const accountIdIsUndefined = 'undefined' === typeof currentAccountId;
-    const accountIdIsEmpty = '' === currentAccountId;
-    const accountIdIsNull = null === currentAccountId;
-    const isNotLoggedIn = accountIdIsUndefined || accountIdIsEmpty || accountIdIsNull;
+    const isAccountIdUndefined = 'undefined' === typeof currentAccountId;
+    const isAccountIdEmpty = '' === currentAccountId;
+    const isAccountIdNull = null === currentAccountId;
+    const isNotLoggedIn = isAccountIdUndefined || isAccountIdEmpty || isAccountIdNull;
     return !isNotLoggedIn;
 };
 
