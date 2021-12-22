@@ -1,10 +1,10 @@
 import { nearWalletConnection } from './near-wallet-connection'
 
 export async function initContract() {
-  await nearWalletConnection.getWalletConnection();
-  await nearWalletConnection.getAccountId();
-  await nearWalletConnection.getAccount();
-  await nearWalletConnection.getContract();
+  window.walletConnection = await nearWalletConnection.getWalletConnection();
+  window.accountId = await nearWalletConnection.getAccountId();
+  window.account = await nearWalletConnection.getAccount();
+  window.contract = await nearWalletConnection.getContract();
 }
 
 export async function logout() {
