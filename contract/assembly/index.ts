@@ -33,15 +33,19 @@ export class TokenSender {
 }
 
 const senderMap = new PersistentMap<string, string[]>('SenderToRecipientMap');
-const receiverMap = new PersistentMap<string, i32[]>('recipientToAmountMap');
+const receiverMap = new PersistentMap<string, i32[]>('RecipientToAmountMap');
 const tokenSender = new TokenSender(senderMap, receiverMap) ;
-
-export function getNames(user:string):string[] {
-    return tokenSender.senderToRecipientMap.contains(user) ? tokenSender.senderToRecipientMap.getSome(user) : [];
+const get = (map:PersistentMap<any, any>, user:string):[] => {
+    return map.contains(user) ? map.getSome(user) : [];
 }
 
+export function getNames(user:string):string[] {
+    return get(tokenSender.senderToRecipientMap, user);
+}
+
+
 export function getValues(user:string):i32[] {
-    return tokenSender.recipientToAmountMap.contains(user) ? tokenSender.recipientToAmountMap.getSome(user) : [];
+    return get(tokenSender.recipientToAmountMap, user);
 }
 
 export function addFunds(recipient:string, amount:i32):void {
