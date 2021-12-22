@@ -51,6 +51,16 @@ export class NearWalletConnection {
   async getAccountId() {
     return (await this.getWalletConnection()).getAccountId();
   }
+
+
+  async isUserLoggedIn() {
+    const currentAccountId = await this.getAccountId();
+    const accountIdIsUndefined = 'undefined' === typeof currentAccountId;
+    const accountIdIsEmpty = '' === currentAccountId;
+    const accountIdIsNull = null === currentAccountId;
+    const isNotLoggedIn = accountIdIsUndefined || accountIdIsEmpty || accountIdIsNull;
+    return !isNotLoggedIn;
+  }
 }
 
 export default function getNearWalletConnection(nearConfig) {

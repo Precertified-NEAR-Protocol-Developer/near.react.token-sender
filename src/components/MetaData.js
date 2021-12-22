@@ -8,7 +8,9 @@ const MetaData = props => {
 
     useEffect(()=>{
         async function setData(){
-            changeMetaData(await nearWalletConnection.getAccountState());
+            if(await nearWalletConnection.isUserLoggedIn()) {
+                changeMetaData(await nearWalletConnection.getAccountState());
+            }
         }
         setData();
     }, []);
