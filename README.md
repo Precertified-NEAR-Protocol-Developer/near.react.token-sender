@@ -79,6 +79,10 @@
          * This will only work if the project already has a repository set up on GitHub.
          * Feel free to modify the `deploy` script in `package.json` to deploy elsewhere.
 
+## Send Funds
+* Execute the command below from a browser terminal
+   * `await window.contract.addFunds({recipient:'test1', amount:10})`
+
 
 ## Troubleshooting
 * On Windows, if you're seeing an error containing `EPERM` it may be related to spaces in your path.

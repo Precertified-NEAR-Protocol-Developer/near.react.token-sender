@@ -1,4 +1,4 @@
-import { Context, logging, storage, PersistentMap } from 'near-sdk-as'
+import { Context, PersistentMap } from 'near-sdk-as'
 
 export class TokenSender {
     constructor(
@@ -6,7 +6,7 @@ export class TokenSender {
         public recipientToAmountMap:PersistentMap<string, i32[]>) {
     }
 
-    addFunds(recipient:string, amount:i32): void {
+    add(recipient:string, amount:i32): void {
         const sender = Context.sender;
         if(!this.senderToRecipientMap.contains(sender)) {
             this.senderToRecipientMap.set(sender, [recipient]);
@@ -42,4 +42,8 @@ export function getNames(user:string):string[] {
 
 export function getValues(user:string):i32[] {
     return tokenSender.recipientToAmountMap.contains(user) ? tokenSender.recipientToAmountMap.getSome(user) : [];
+}
+
+export function addFunds(recipient:string, amount:i32):void {
+    tokenSender.add(recipient, amount);
 }
