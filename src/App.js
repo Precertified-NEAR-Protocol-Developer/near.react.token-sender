@@ -11,7 +11,7 @@ export default function App() {
     <React.Fragment>
       <NavbarComponent/>
         {
-          (nearWalletConnection.getAccountId()==='') ?
+          (nearWalletConnection.isUserLoggedIn()) ?
             'You cannot see MetaData associated with the account until you login.'
             :
             <MetaData/>
