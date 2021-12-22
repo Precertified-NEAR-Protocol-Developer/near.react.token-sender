@@ -23,7 +23,7 @@ export class TokenSender {
                 allRecipients.push(recipient);
                 this.senderToRecipientMap.set(sender, allRecipients);
                 this.recipientToAmountMap.set(sender, recipientReceivedAmounts);
-            } else {
+            } else { 
                 const indexOfRecipient = allRecipients.indexOf(recipient);
                 const oldRecipientTotalSent = recipientReceivedAmounts[indexOfRecipient];
                 const newRecipientTotalSent = oldRecipientTotalSent + amount;
@@ -32,6 +32,16 @@ export class TokenSender {
             }
         }
     }
+
+    
+    names(user:string):string[] {
+        return this.senderToRecipientMap.contains(user) ? this.senderToRecipientMap.getSome(user) : [];
+    }
+
+
+    values(user:string):i32[] {
+        return this.recipientToAmountMap.contains(user) ? this.recipientToAmountMap.getSome(user) : [];
+    }
 }
 
 const senderMap = new PersistentMap<string, string[]>('SenderToRecipientMap');
@@ -39,12 +49,11 @@ const receiverMap = new PersistentMap<string, i32[]>('RecipientToAmountMap');
 const tokenSender = new TokenSender(senderMap, receiverMap) ;
 
 export function getNames(user:string):string[] {
-    return tokenSender.senderToRecipientMap.contains(user) ? tokenSender.senderToRecipientMap.getSome(user) : [];
+    return tokenSender.names(user);
 }
 
-
 export function getValues(user:string):i32[] {
-    return tokenSender.recipientToAmountMap.contains(user) ? tokenSender.recipientToAmountMap.getSome(user) : [];
+    return  tokenSender.values(user);
 }
 
 export function addFunds(recipient:string, amount:i32):void {
