@@ -1,4 +1,4 @@
-import { Context, PersistentMap } from 'near-sdk-as'
+import { Context, PersistentMap, logging } from 'near-sdk-as'
 
 export class TokenSender {
     constructor(
@@ -8,7 +8,9 @@ export class TokenSender {
 
     add(recipient:string, amount:i32): void {
         const sender = Context.sender;
-        if(!this.senderToRecipientMap.contains(sender)) {
+        const doesNotContainSender = this.senderToRecipientMap.contains(sender);
+
+        if(doesNotContainSender) {
             this.senderToRecipientMap.set(sender, [recipient]);
             this.recipientToAmountMap.set(sender, [amount]);
         } else {
