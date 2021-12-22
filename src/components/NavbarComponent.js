@@ -6,6 +6,14 @@ import { login, logout } from '../utils'
 import '../global.css'
 import { nearWalletConnection } from '../near-wallet-connection';
 
+const isUserLoggedIn = () => {
+    const currentAccountId = window.accountId;
+    const accountIdIsUndefined = 'undefined' === typeof currentAccountId;
+    const accountIdIsEmpty = '' === currentAccountId;
+    const accountIdIsNull = null === currentAccountId;
+    const isNotLoggedIn = accountIdIsUndefined || accountIdIsEmpty || accountIdIsNull;
+    return !isNotLoggedIn;
+};
 
 const NavbarComponent = props => {
     return (        
@@ -15,15 +23,15 @@ const NavbarComponent = props => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto"></Nav>
                     <Nav>                            
-                        <Nav.Link onClick={
-                            (nearWalletConnection.getAccountId()==='') ?
-                            login :
-                            logout
+                        <Nav.Link onClick={                            
+                            isUserLoggedIn() ?
+                            logout :
+                            login
                         }>
                             {
-                                (nearWalletConnection.getAccountId()==='')?
-                                'Login' :
-                                'Logout'
+                                isUserLoggedIn() ?
+                                'Logout' :
+                                'Login'
                             }
                         </Nav.Link>
                     </Nav>
