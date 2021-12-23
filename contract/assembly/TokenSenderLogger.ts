@@ -1,5 +1,5 @@
 import { TokenSender } from './TokenSender';
-import {Context, logging } from 'near-sdk-as'
+import { logging } from 'near-sdk-as'
 
 export class TokenSenderLogger {
     constructor(private tokenSender:TokenSender) {
@@ -14,7 +14,7 @@ export class TokenSenderLogger {
     names(user:string):string[] {
         logging.log(`Attempting to retrieve list of recipients of ${user}`);
         const recipientList = this.tokenSender.names(user);
-        logging.log(`Successfully retrieved recipient list ${recipientList.join("").toString()}`);
+        logging.log(`Successfully retrieved recipient list ${recipientList}`);
         return recipientList;
     }
 

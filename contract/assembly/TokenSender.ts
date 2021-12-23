@@ -8,9 +8,9 @@ export class TokenSender {
 
     add(recipient:string, amount:i32): void {
         const sender = Context.sender;
-        const doesNotContainSender = this.senderToRecipientMap.contains(sender);
+        const hasSender = this.senderToRecipientMap.contains(sender);
 
-        if(doesNotContainSender) {
+        if(!hasSender) {
             this.senderToRecipientMap.set(sender, [recipient]);
             this.recipientToAmountMap.set(sender, [amount]);
         } else {

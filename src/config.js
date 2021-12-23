@@ -1,6 +1,14 @@
 const CONTRACT_NAME = process.env.CONTRACT_NAME ||'near.react.my-first-fullstack.git-leon.testnet'
 
 function getConfig(env) {
+  console.log(`Attempting to find config with environment of '${env}'`)
+  const config = findConfig(env);
+  console.log(`NEAR Config initialized ↓`);
+  console.log(config);
+  return config;  
+}
+
+function findConfig(env) {
   switch (env) {
 
   case 'production':
