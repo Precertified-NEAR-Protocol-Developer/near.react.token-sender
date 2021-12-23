@@ -1,8 +1,8 @@
-import { TokenSender } from './TokenSender';
+import { TokenSenderInterface } from './TokenSenderInterface';
 import { logging } from 'near-sdk-as'
 
-export class TokenSenderLogger {
-    constructor(private tokenSender:TokenSender) {
+export class TokenSenderLogger implements TokenSenderInterface {
+    constructor(private tokenSender:TokenSenderInterface) {
     }
 
     add(recipient:string, amount:i32): void {
