@@ -33,12 +33,16 @@ export class TokenSender {
         }
     }
     
-    names(user:string):string[] {
-        return this.senderToRecipientMap.contains(user) ? this.senderToRecipientMap.getSome(user) : [];
+    names(sender:string):string[] {
+        return this.senderToRecipientMap.contains(sender) ? this.senderToRecipientMap.getSome(sender) : [];
     }
 
 
-    values(user:string):i32[] {
-        return this.recipientToAmountMap.contains(user) ? this.recipientToAmountMap.getSome(user) : [];
+    values(sender:string):i32[] {
+        return this.recipientToAmountMap.contains(sender) ? this.recipientToAmountMap.getSome(sender) : [];
+    }
+
+    totalSent(sender:string, recipient:string):i32 {
+        return this.recipientToAmountMap.getSome(sender)[this.names(sender).indexOf(recipient)]
     }
 }

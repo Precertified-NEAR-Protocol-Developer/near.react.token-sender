@@ -20,3 +20,7 @@ export function getValues(user:string):i32[] {
 export function addFunds(recipient:string, amount:i32):void {
     tokenSenderLogger.add(recipient, amount);
 }
+
+export function getTotalSent(sender:string, recipient:string):i32 {
+    return tokenSenderLogger.totalSent(sender, recipient);
+}

@@ -51,7 +51,7 @@ export class NearWalletConnection {
     if(this.contract === null) {
         console.log(`Creating new Contract with contract name of '${this.nearConfig.contractName}'`);
         this.contract = new Contract(await this.getAccount(), this.nearConfig.contractName, {
-          viewMethods: ['getNames', 'getValues'],
+          viewMethods: ['getNames', 'getValues', 'getTotalSent'],
           changeMethods: ['addFunds'],
         });
         console.log(`Contract created`);

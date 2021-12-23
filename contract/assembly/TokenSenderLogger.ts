@@ -25,4 +25,11 @@ export class TokenSenderLogger {
         logging.log(`Successfully retrieved recipient list ${valuesReceived}`);
         return valuesReceived;
     }
+
+    totalSent(sender:string, recipient:string):i32 {
+        logging.log(`Attempting to get total amount sent from '${sender}' to '${recipient}'`);
+        const totalSent = this.tokenSender.totalSent(sender, recipient);
+        logging.log(`'${sender}' has sent '${totalSent}' to '${recipient}'`);
+        return totalSent;
+    }
 }
