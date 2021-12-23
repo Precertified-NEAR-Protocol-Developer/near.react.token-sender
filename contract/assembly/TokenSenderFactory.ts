@@ -10,7 +10,7 @@ export class TokenSenderFactory {
     }
 
     static getLogged(tokenSender:TokenSenderInterface):TokenSenderInterface {
-        return new TokenSenderLogger(tokenSender);
+        return new TokenSenderLoggerImpl(tokenSender);
     }
     
     static getDefault(): TokenSenderInterface {
