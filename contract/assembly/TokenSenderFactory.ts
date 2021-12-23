@@ -1,5 +1,5 @@
 import { TokenSender } from './TokenSender';
-import { TokenSenderLogger } from './TokenSenderLogger';
+import { TokenSenderLoggerImpl } from './TokenSenderLoggerImpl';
 import { TokenSenderInterface } from './TokenSenderInterface';
 import { PersistentMap } from 'near-sdk-as'
 
