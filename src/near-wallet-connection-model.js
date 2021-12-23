@@ -54,7 +54,7 @@ export class NearWalletConnection {
           viewMethods: ['getNames', 'getValues', 'getTotalSent'],
           changeMethods: ['addFunds'],
         });
-        console.log(`Contract created`);
+        console.log(`Contract created ↓`);
         console.log(this.contract);
     }
     return this.contract;
