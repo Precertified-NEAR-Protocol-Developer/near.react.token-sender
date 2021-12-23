@@ -42,7 +42,7 @@ export class NearWalletConnection {
         console.log(`Creating new WalletConnection`);        
         this.walletConnection = new WalletConnection(await this.getNearConnection());
         console.log(`WalletConnection created ↓`);
-        console.log(await this.getNearConnection());
+        console.log(this.walletConnection);
     }
     return this.walletConnection;
   }
