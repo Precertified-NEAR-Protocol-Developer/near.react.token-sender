@@ -10,12 +10,12 @@ const TokenSender = props => {
     let inputRecipient = React.createRef();
 
     const sendTokens=async() => {
-        const currentState = await nearWalletConnection.getState();
-        const currentAmount =  Number(await nearWalletConnection.formatNearAmount(currentState.amount));
-        const enteredAmount = Number(inputValue.current.value);
+        const currentState = await window.account.state();
+        const currentAmount =  await nearWalletConnection.formatNearAmount(currentState.amount);
+        const enteredAmount = inputValue.current.value;
         const recipientName = inputRecipient.current.value;
 
-        if(currentAmount > enteredAmount) {
+        if(Number(currentAmount) > Number(enteredAmount)) {
             const contract = await nearWalletConnection.getContract();
             const accountId = await nearWalletConnection.getAccountId();
             await nearWalletConnection
@@ -60,8 +60,8 @@ const TokenSender = props => {
                         <Container>
                             <Row>
                                 <Col>
-                                    <input type="text" placeholder="Enter recipient here" ref={recipients}/>
-                                    <input type="text" placeholder="Enter value here" ref={values}/>
+                                    <input type="text" placeholder="Enter recipient here" ref={inputRecipient}/>
+                                    <input type="text" placeholder="Enter value here" ref={inputValue}/>
                                 </Col>
                                 <Col>                                
                                     <Button onClick={sendTokens}>Submit</Button>
