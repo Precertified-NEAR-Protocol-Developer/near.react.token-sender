@@ -56,12 +56,12 @@ const TokenSender = props => {
                     </ListGroup>
                 </Card>
             </Row>
-            <Row>
+            <Row className="d-flex justify-content-center">
                 <Card>
                     <Card.Header>Send Money to Friend</Card.Header>
                     <Card.Body>
                         <Container>
-                            <Row>
+                            <Row className="d-flex justify-content-center">
                                 <Col>
                                     <input type="text" placeholder="Enter recipient here" ref={inputRecipient}/>
                                     <input type="text" placeholder="Enter value here" ref={inputValue}/>
@@ -74,7 +74,8 @@ const TokenSender = props => {
                                 <Table style = {{marginTop:'10px'}} striped bordered hover variant="dark">
                                     <thead>
                                         <tr>
-                                            <th colSpan="2">Transaction History</th>
+                                            <th colSpan="1">Recipient Name</th>
+                                            <th colSpan="1">Amount Received</th>
                                         </tr>
                                     </thead>
                                     <tbody>
