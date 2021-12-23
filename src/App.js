@@ -4,7 +4,8 @@ import 'regenerator-runtime/runtime'
 import './global.css'
 import MetaData from './components/MetaData'
 import NavbarComponent from './components/NavbarComponent'
-import { nearWalletConnection } from './near-wallet-connection';
+import TokenSender from './components/TokenSender';
+import { Container, Row } from 'react-bootstrap';
 
 const isUserLoggedIn = () => {
   const currentAccountId = window.accountId;
@@ -19,12 +20,17 @@ export default function App() {
   return (
     <React.Fragment>
       <NavbarComponent/>
-        {
-          (!isUserLoggedIn()) ?
-            'You cannot see MetaData associated with the account until you login.'
-            :
-            <MetaData/>
-        }
+      {
+        (!isUserLoggedIn()) ?
+          'You cannot see MetaData associated with the account until you login.'
+          :
+          <div id="login-view">
+            <Container>
+              <Row className="d-flex justify content center"><MetaData/></Row>
+              <Row className="d-flex justify content center"><TokenSender/></Row>
+            </Container>
+          </div>
+      }
     </React.Fragment>
   );
 } 

@@ -1,4 +1,4 @@
-import { connect, Contract, keyStores, WalletConnection, } from 'near-api-js';
+import {utils, connect, Contract, keyStores, WalletConnection, } from 'near-api-js';
 
 export function initConnection(config) {
     return connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, config))
@@ -67,6 +67,22 @@ export class NearWalletConnection {
     const isAccountIdNull = null === currentAccountId;
     const isNotLoggedIn = isAccountIdUndefined || isAccountIdEmpty || isAccountIdNull;
     return !isNotLoggedIn;
+  }
+
+  async formatNearAmount(amount) {
+    return await utils.format.formatNearAmount(amount);
+  }
+
+  async parseNearAmount(amount) {
+    return await utils.format.parseNearAmount(amount);
+  }
+
+  async sendMoney(recipient, amount) {
+    (await this.getAccount()).sendMoney(recipient, amount);
+  }
+
+  async addFunds(recipientAndAmountObject) {
+    await (await this.getContract()).addFunds(recipientAndAmountObject);
   }
 }
 
