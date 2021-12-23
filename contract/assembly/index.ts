@@ -1,7 +1,7 @@
 import { TokenSenderInterface } from './TokenSenderInterface';
 import { TokenSenderFactory } from './TokenSenderFactory';
 
-const tokenSender: TokenSenderInterface = TokenSenderFactory.getLogged();
+const tokenSender: TokenSenderInterface = TokenSenderFactory.getDefaultLogged();
 
 export function getNames(user:string):string[] {
     return tokenSender.names(user);
