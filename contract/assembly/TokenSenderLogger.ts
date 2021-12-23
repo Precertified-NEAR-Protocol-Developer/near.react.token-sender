@@ -14,7 +14,7 @@ export class TokenSenderLogger implements TokenSenderInterface {
     names(user:string):string[] {
         logging.log(`Attempting to retrieve list of recipients of ${user}`);
         const recipientList = this.tokenSender.names(user);
-        logging.log(`Successfully retrieved recipient list ${recipientList}`);
+        logging.log(`Successfully retrieved recipient list: ${recipientList}`);
         return recipientList;
     }
 
@@ -22,7 +22,7 @@ export class TokenSenderLogger implements TokenSenderInterface {
     values(user:string):i32[] {
         logging.log(`Attempting to retrieve list of values of ${user}`);
         const valuesReceived = this.tokenSender.values(user);
-        logging.log(`Successfully retrieved recipient list ${valuesReceived}`);
+        logging.log(`Successfully retrieved values list: ${valuesReceived}`);
         return valuesReceived;
     }
 
