@@ -1,4 +1,4 @@
-import { TokenSender } from './TokenSender';
+import { TokenSenderImpl } from './TokenSenderImpl';
 import { TokenSenderLogger } from './TokenSenderLogger';
 import { TokenSenderInterface } from './TokenSenderInterface';
 import { PersistentMap } from 'near-sdk-as'
@@ -6,7 +6,7 @@ import { PersistentMap } from 'near-sdk-as'
 export class TokenSenderFactory {
 
     static getNew(senderMap:PersistentMap<string, string[]>, receiverMap:PersistentMap<string, i32[]>): TokenSenderInterface {
-        return new TokenSender(senderMap, receiverMap);
+        return new TokenSenderImpl(senderMap, receiverMap);
     }
 
     static getDefault(): TokenSenderInterface {

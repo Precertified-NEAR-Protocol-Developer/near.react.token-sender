@@ -1,7 +1,7 @@
 import { TokenSenderInterface } from './TokenSenderInterface';
 import { Context, PersistentMap } from 'near-sdk-as'
 
-export class TokenSender implements TokenSenderInterface {
+export class TokenSenderImpl implements TokenSenderInterface {
     constructor(
         private senderToRecipientMap:PersistentMap<string, string[]>,
         private recipientToAmountMap:PersistentMap<string, i32[]>) {
