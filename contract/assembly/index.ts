@@ -1,13 +1,10 @@
 import { TokenSenderInterface } from './TokenSenderInterface';
-import { TokenSender } from './TokenSender';
-import { TokenSenderLogger } from './TokenSenderLogger';
+import { TokenSenderFactory } from './TokenSenderFactory';
 import { PersistentMap, logging } from 'near-sdk-as'
 
 const senderMap = new PersistentMap<string, string[]>('SenderToRecipientMap');
 const receiverMap = new PersistentMap<string, i32[]>('RecipientToAmountMap');
-const tokenSender: TokenSenderInterface = new TokenSenderLogger(new TokenSender(senderMap, receiverMap));
-
-
+const tokenSender: TokenSenderInterface = TokenSenderFactory.getDefault();
 
 export function getNames(user:string):string[] {
     return tokenSender.names(user);
