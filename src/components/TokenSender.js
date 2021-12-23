@@ -14,13 +14,15 @@ const TokenSender = props => {
         const currentAmount =  await nearWalletConnection.formatNearAmount(currentState.amount);
         const enteredAmount = inputValue.current.value;
         const recipientName = inputRecipient.current.value;
+        const enteredAmountAsNumber = Number(enteredAmount);
+        const currentAmountAsNumber = Number(currentAmount);
 
-        if(Number(currentAmount) > Number(enteredAmount)) {
+        if(currentAmountAsNumber > enteredAmountAsNumber) {
             const contract = await nearWalletConnection.getContract();
             const accountId = await nearWalletConnection.getAccountId();
             await nearWalletConnection
                 .sendMoney(enteredAmount)
-                .then(await nearWalletConnection.addFunds({recipient:recipientName, amount:enteredAmount}))
+                .then(await nearWalletConnection.addFunds({recipient:recipientName, amount:enteredAmountAsNumber}))
                 .then(setRecipients(await contract.getNames({user:accountId})))
                 .then(setValues(await contract.getValues({user:accountId})))
         } else {
@@ -30,6 +32,7 @@ const TokenSender = props => {
 
     useEffect(()=> { // set initial values
         async function get(){
+            const accountId = await nearWalletConnection.getAccountId();
             setRecipients(await contract.getNames({user:accountId}));
             setValues(await contract.getValues({user:accountId}));
         }
@@ -62,10 +65,9 @@ const TokenSender = props => {
                                 <Col>
                                     <input type="text" placeholder="Enter recipient here" ref={inputRecipient}/>
                                     <input type="text" placeholder="Enter value here" ref={inputValue}/>
-                                </Col>
-                                <Col>                                
                                     <Button onClick={sendTokens}>Submit</Button>
                                 </Col>
+
                             </Row>
 
                             <Row className="d-flex justify-content-center">
@@ -77,11 +79,11 @@ const TokenSender = props => {
                                     </thead>
                                     <tbody>
                                         {
-                                            recipients.map((recipient, amount)=>{
+                                            recipients.map((recipient, index)=>{
                                                 return (
                                                     <tr key={recipient}>
                                                         <td>{recipient}</td>
-                                                        <td>{amount} NEAR</td>
+                                                        <td>{`${values[index]} NEAR`}</td>
                                                     </tr>
                                                 );
                                             })
